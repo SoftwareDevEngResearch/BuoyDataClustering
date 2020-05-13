@@ -60,19 +60,19 @@ def cleaning(file_name, wave_files, combined_data=None, cleaning_data=None):
     if os.path.exists('cleaning_data_' + file_name + '.txt'):
         with open('cleaning_data_' + file_name + '.txt', 'r') as f:
             df = pd.read_csv('cleaning_data_' + file_name + '.txt', dtype=float)
-        print('it worked')
+        print 'it worked'
         df[['#YY', 'MM', 'DD', 'hh', 'mm']]\
             = df[['#YY', 'MM', 'DD', 'hh', 'mm']].astype(int)
         return df
 
     else:
 
-        print('test')
+        print 'test'
         d = combining_files(file_name, wave_files, combined_data=None)
-        print(d)
-        print("entering data_frame")
+        print d
+        print "entering data_frame"
         df = pd.DataFrame(data=d[2:], columns=d[0])
-        print(df)
+        print df
         df_1 = df.loc[:, ('#YY', 'MM', 'DD', 'hh', 'mm', 'WVHT', 'APD', 'MWD')]
         # print df_1
 
@@ -96,7 +96,7 @@ def cleaning(file_name, wave_files, combined_data=None, cleaning_data=None):
         # Cleaning data of values of wave direction over 360 or below 0
         # Cleaning data of wave height values over 20 m
 #        count = 0
-        print('entering first for loop')
+        print 'entering first for loop'
         for index, row in df_1.iterrows():
             if row['MWD'] > 360.0:
                 df_1.drop(index, inplace=True)
@@ -109,25 +109,25 @@ def cleaning(file_name, wave_files, combined_data=None, cleaning_data=None):
             #         count += 1
             # print 'below 140 degrees: ', count
             # print ''
-        print('reindexing')
+        print 'reindexing'
         df_1 = df_1.reset_index(drop=True)
 
-        print('entering second for loop')
+        print 'entering second for loop'
         for index, row in df_1.iterrows():
             if row['WVHT'] > 20.0:
                 df_1.drop(index, inplace=True)
 
-        print('reindexing')
+        print 'reindexing'
 
-        print('entering third for loop')
+        print 'entering third for loop'
         for index, row in df_1.iterrows():
             if row['APD'] > 20.0:
                 df_1.drop(index, inplace=True)
 
-        print('reindexing')
+        print 'reindexing'
         
         ##cutting out the outlieers from dataframe
-        print('eliminating outliers')
+        print 'eliminating outliers'
         normalized_data = normalize(df_1)
         n_df = normalized_data[['WVHT', 'APD']]
         
@@ -190,13 +190,13 @@ def dir_cleaning(f_name, data):
 
 def compare(f_name, cleaned_data):
     dir_cleaning(f_name, cleaned_data)
-    print("passed through HI function")
-    print('compare test')
+    print"passed through HI function"
+    print 'compare test'
     df = cleaned_data
 #    print df['MWD'].describe()
 #    print df['WVHT'].describe()
 #    print df['APD'].describe()
-    print('binning data.....')
+    print 'binning data.....'
     b = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280,\
          300, 320, 340, 360]
     df_1 = df.groupby(pd.cut(df['MWD'], bins=b))
@@ -264,8 +264,8 @@ def clustering_2D_HT2(df, n_df, nc=2, t=0.001):
     
     label = km.labels_
     centroid = km.cluster_centers_
-    print("centers")
-    print(centroid)
+    print"centers"
+    print centroid
 #    return label
     label = np.array(label, dtype = int)
     dff = df[['WVHT', 'APD']] 
@@ -279,8 +279,8 @@ def clustering_2D_HT2(df, n_df, nc=2, t=0.001):
             if row['cluster_loc'] == i:
                 clust_count[i] = clust_count[i] + 1
     clust_den = 100*(clust_count / len(dff_s))
-    print("clust_den")
-    print(clust_den)
+    print "clust_den"
+    print clust_den
     plt.scatter(X[:,0], X[:,1], c=label, s=50, cmap='viridis')  
     plt.scatter(centroid[:,0], centroid[:,1], color='white', marker = 'x')
     plt.xlabel("Significant Wave Height Normalized Data")
@@ -303,7 +303,7 @@ def to_percent(y, position):
 if __name__ == '__main__':
 
     # Calling buoying location and going through the cleaning process
-    file_name = input("enter buoy location: ")
+    file_name = raw_input("enter buoy location: ")
     buoy_files = glob.glob(file_name + "*.txt")
     
     if str(file_name) == "HI_51202" or str(file_name) == "CA_46022":
@@ -327,13 +327,13 @@ if __name__ == '__main__':
     km = KMeans(n_clusters= nc, init= 'random', tol=t).fit(X)
     
     label = km.labels_
-    label_len = str(list(range(0,len(label))))
+    label_len = str(range(0,len(label)))
     centroid = km.cluster_centers_
     inertia_value = km.inertia_
 #    print"centers"
 #    print centroid
-    print("inertia values:")
-    print(inertia_value)
+    print "inertia values:"
+    print inertia_value
 
     label = np.array(label, dtype = int)
     dff = df[['WVHT', 'APD']] 
@@ -348,29 +348,26 @@ if __name__ == '__main__':
                 clust_count[i] = clust_count[i] + 1
     
     clust_den = 100*(clust_count / len(dff_s))
-    print("clust_den")
-    print(clust_den)
+    print "clust_den"
+    print clust_den
     
     cluster_groups_wvht = dff.groupby('cluster_loc')['WVHT'].mean().round(2)
-    print(cluster_groups_wvht)
+    print cluster_groups_wvht
     cluster_groups_apd = dff.groupby('cluster_loc')['APD'].mean().round(2)
-    print(cluster_groups_apd)
+    print cluster_groups_apd
     
 #    unnorm_df = unnormalize(centroid)
 #    print "un-normalized Centroids"
 #    print unnorm_df
-                   
+                            
     
-    dff.plot.scatter('WVHT', 'APD', c='cluster_loc', colormap='viridis')
+    plt.figure()
+    plt.scatter(dff[['WVHT']], dff[['APD']], c=dff[['cluster_loc']], s=50, cmap='viridis')
     plt.scatter(cluster_groups_wvht, cluster_groups_apd, color='white', marker = 'x')
+    
+    plt.xlabel("Significant Wave Height Normalized Data")
+    plt.ylabel("Average Wave Period Normalized Data")
+#    plt.legend(centroid,label_len) ##still not working.... 
     plt.show()
     
-#     plt.figure()
-#     plt.scatter(dff[['WVHT']], dff[['APD']], c=colormapp[categories], s=50, cmap='viridis')
-#     plt.scatter(cluster_groups_wvht, cluster_groups_apd, color='white', marker = 'x')
-    
-#     plt.xlabel("Significant Wave Height Normalized Data")
-#     plt.ylabel("Average Wave Period Normalized Data")
-# #    plt.legend(centroid,label_len) ##still not working.... 
-#     plt.show()
-    
+
