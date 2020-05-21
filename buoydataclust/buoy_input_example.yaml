@@ -1,0 +1,39 @@
+---
+
+## Welcome to the BuoyDataClustering YAML input file
+# Please Do not modify the format of this file other than the specified inputs
+
+
+## General Buoy information 
+
+# Enter a buoy location to identifiy the buoy station identifier
+# The format is ST_buoy identifier
+# An example is ST_51202, which is a buoy located in HI, USA
+Buoy: ST_51202
+
+# Enter the location of the NOAA Buoy (State/providence, Country)
+Location: HI, USA
+
+# Enter in the amount of data files to be analyzed (number of years)
+# This value should be < 50 years
+years: 10
+     
+## Desired output analysis of the Buoy Data##
+    
+
+# Possible clustering combinations that can be analyzed 
+    # [1] wave height and wave period
+    # [2] wave height and directionality
+    # [3] wave period and directionality
+    # [4] 3D cluster with wave height, period, and directionality
+clustering: 1
+
+# Possible wave distributions
+    # [1] bretschneider
+    # [2] pierson-moskowitz
+    # [3] JONSWAP
+    # [4] Rayleigh
+    
+wave_distribution: 1
+
+...
