@@ -1,6 +1,7 @@
 # BuoyDataClustering
  
  Version 0.1.0
+ [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3893109.svg)](https://doi.org/10.5281/zenodo.3893109)
  
 BuoyDataClustering is a python package used to sort, clean, and analyze historical buoy data from the National Oceanic and Atmospheric Administration's (NOAA) [National Data Buoy Center](https://www.ndbc.noaa.gov/). This packages allows the user to fill out a simple YAML text file on the buoy identification and location and then proceeds to calculate representative sea states by using [Scikit-learn K-means clustering](https://scikit-learn.org/stable/modules/clustering.html).
 
