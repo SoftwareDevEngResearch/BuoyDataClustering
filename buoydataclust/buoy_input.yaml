@@ -1,0 +1,33 @@
+## General Buoy information 
+
+# Enter a buoy location to identifiy the buoy station identifier
+# The format is ST_buoy identifier
+# An example is ST_51202, which is a buoy located in HI, USA
+Buoy: 
+
+# Enter the location of the NOAA Buoy (State/providence, Country)
+Location: 
+
+# Enter in the amount of data files to be analyzed (number of years)
+# This value should be < 50 years
+years: 
+ 
+## Desired output analysis of the Buoy Data##
+
+
+# Possible clustering combinations that can be analyzed 
+    # [0] wave height and wave period
+    # [1] wave height and directionality
+    # [2] wave period and directionality
+    # [3] 3D cluster with wave height, period, and directionality
+clustering: 
+
+# Possible wave distributions
+    # [0] bretschneider
+    # [1] pierson-moskowitz
+    # [1] JONSWAP
+    # [2] Rayleigh
+    
+wave_distribution: 
+    
+...
