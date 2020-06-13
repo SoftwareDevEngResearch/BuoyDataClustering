@@ -73,7 +73,7 @@ def check_cluster(buoy_dict):
     cluster = buoy_dict.get('clustering')
     assert type(cluster) == int, 'Input file requires an integer input'
     
-    assert 1 <= cluster <= 4, 'cluster type input not within range of index'
+    assert 1 == cluster, 'cluster type input not within range of index'
 
 def check_distribution(buoy_dict):
         #distribution assertions
@@ -84,7 +84,7 @@ def check_distribution(buoy_dict):
     distribution = buoy_dict.get('wave_distribution')
     assert type(distribution) == int, 'Input file requires an integer input'
     
-    assert 1 <= distribution <= 4, 'distribution type input not within range of index'
+    assert 1 == distribution, 'distribution type input not within range of index'
     
 
 
